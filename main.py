@@ -1,3 +1,5 @@
-# sum of 3
-def sum(x, y, z):
-    return x + y + z
+def sum(*args):
+    res = 0
+    for x in args:
+        res += x
+    return res

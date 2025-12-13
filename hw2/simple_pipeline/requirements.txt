@@ -1,0 +1,11 @@
+pip
+pytest
+python-dotenv
+ruff
+scikit-learn
+pandas
+numpy
+pydantic
+pyyaml
+joblib
+-e .

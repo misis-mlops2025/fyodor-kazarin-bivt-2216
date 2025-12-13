@@ -38,6 +38,11 @@ format:
 	ruff check --fix
 	ruff format
 
+## Validate code with pylint
+.PHONY: pylint
+pylint:
+	$(PYTHON_INTERPRETER) -m pylint simple_pipeline
+
 
 
 ## Run tests

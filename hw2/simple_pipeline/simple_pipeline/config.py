@@ -1,5 +1,6 @@
 from enum import Enum
 from pathlib import Path
+import yaml
 from pydantic import BaseModel, Field
 
 
@@ -47,14 +48,11 @@ def load_config(config_path: Path | None = None) -> TrainingConfig:
     if config_path is None:
         project_root = Path(__file__).parent.parent
         config_path = project_root / "config.yaml"
-    
+
     config_path = Path(config_path)
-    
+
     if config_path.exists():
-        import yaml
-        with open(config_path, "r") as f:
+        with open(config_path, "r", encoding="utf-8") as f:
             config_dict = yaml.safe_load(f)
         return TrainingConfig(**config_dict)
-    else:
-        return TrainingConfig()
-
+    return TrainingConfig()

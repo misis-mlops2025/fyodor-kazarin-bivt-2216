@@ -1,0 +1,17 @@
+[MASTER]
+init-hook='import sys; sys.path.append(".")'
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-many-arguments,
+    too-many-positional-arguments,
+    import-outside-toplevel
+
+[FORMAT]
+max-line-length=99
+
+[TYPECHECK]
+ignored-modules=sklearn

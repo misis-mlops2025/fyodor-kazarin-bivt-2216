@@ -2,6 +2,7 @@ pip
 pytest
 python-dotenv
 ruff
+pylint
 scikit-learn
 pandas
 numpy

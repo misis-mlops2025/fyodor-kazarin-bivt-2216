@@ -50,6 +50,16 @@ pylint:
 test:
 	python3 -m pytest tests
 
+## Run tests with coverage report
+.PHONY: coverage
+coverage:
+	$(PYTHON_INTERPRETER) -m pytest tests --cov=simple_pipeline --cov-report=term-missing --cov-report=html --cov-config=.coveragerc
+
+## Show coverage report
+.PHONY: coverage-report
+coverage-report:
+	$(PYTHON_INTERPRETER) -m coverage report
+
 
 ## Set up Python interpreter environment
 .PHONY: create_environment

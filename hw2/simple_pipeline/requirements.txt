@@ -4,6 +4,7 @@ pytest-cov
 python-dotenv
 ruff
 pylint
+dvc
 scikit-learn
 pandas
 numpy

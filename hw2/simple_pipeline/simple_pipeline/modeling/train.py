@@ -1,9 +1,10 @@
 from pathlib import Path
+import json
 import joblib
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report, precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
@@ -66,6 +67,9 @@ def train_model(config: TrainingConfig | None = None):
 
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='weighted')
+    recall = recall_score(y_test, y_pred, average='weighted')
+    f1 = f1_score(y_test, y_pred, average='weighted')
 
     print(f"Model: {config.model.model_type.value}")
     print(f"Accuracy: {accuracy:.4f}")
@@ -80,6 +84,18 @@ def train_model(config: TrainingConfig | None = None):
     model_output_path.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(model, model_output_path)
     print(f"\nModel saved to {model_output_path}")
+
+    metrics = {
+        "accuracy": float(accuracy),
+        "precision": float(precision),
+        "recall": float(recall),
+        "f1_score": float(f1),
+        "model_type": config.model.model_type.value
+    }
+
+    metrics_path = project_root / "metrics.json"
+    with open(metrics_path, "w", encoding="utf-8") as f:
+        json.dump(metrics, f, indent=2)
 
     return model, accuracy
 

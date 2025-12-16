@@ -57,5 +57,46 @@ A short description of the project.
     └── plots.py                <- Code to create visualizations
 ```
 
+## DVC Pipeline
+
+This project uses DVC (Data Version Control) for managing data and model versions.
+
+### Setup
+
+1. Initialize DVC (if not already done):
+   ```bash
+   make dvc-init
+   ```
+
+2. Configure local storage (already configured in `.dvc/config`):
+   - Local cache directory: `.dvc/cache`
+   - All data files and models are stored locally
+
+### Usage
+
+- **Run entire pipeline**: `make dvc` or `dvc repro`
+- **Run specific stage**: `make dvc-stage STAGE=generate_data` or `dvc repro generate_data`
+- **Check pipeline status**: `make dvc-status` or `dvc status`
+- **Push to local storage**: `make dvc-push` or `dvc push`
+- **Pull from local storage**: `make dvc-pull` or `dvc pull`
+- **Check cache size**: `make dvc-cache-size`
+- **Clean cache**: `make dvc-cache-clean` or `dvc cache clean`
+
+### Pipeline Stages
+
+1. **generate_data**: Generates classification dataset
+   - Outputs: `data/raw/classification_*.csv`
+   - Tracks: `config.yaml` parameters
+
+2. **train**: Trains ML model
+   - Dependencies: Generated data, training code
+   - Outputs: `models/trained_model.pkl`
+   - Metrics: `metrics.json` (accuracy, precision, recall, f1_score)
+   - Tracks: `config.yaml` parameters
+
+### Local Storage
+
+Data and models are stored in `.dvc/cache/` directory. This directory is gitignored but DVC tracks the file hashes. The actual files are stored locally and can be versioned through DVC.
+
 --------
 

@@ -86,6 +86,47 @@ data:
 train:
 	$(PYTHON_INTERPRETER) -m simple_pipeline.modeling.train
 
+## Initialize DVC (if not already done)
+.PHONY: dvc-init
+dvc-init:
+	dvc init --no-scm
+
+## Run DVC pipeline
+.PHONY: dvc
+dvc:
+	dvc repro
+
+## Run specific DVC stage
+.PHONY: dvc-stage
+dvc-stage:
+	dvc repro $(STAGE)
+
+## Show DVC pipeline status
+.PHONY: dvc-status
+dvc-status:
+	dvc status
+
+## Push data to local storage
+.PHONY: dvc-push
+dvc-push:
+	dvc push
+
+## Pull data from local storage
+.PHONY: dvc-pull
+dvc-pull:
+	dvc pull
+
+## Show DVC cache directory size
+.PHONY: dvc-cache-size
+dvc-cache-size:
+	@du -sh .dvc/cache 2>/dev/null || echo "Cache directory not found"
+
+## Clean DVC cache
+.PHONY: dvc-cache-clean
+dvc-cache-clean:
+	dvc cache dir
+	dvc cache clean
+
 
 
 #################################################################################

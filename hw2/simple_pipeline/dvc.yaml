@@ -1,0 +1,40 @@
+stages:
+  generate_data:
+    cmd: python -m simple_pipeline.dataset
+    deps:
+      - simple_pipeline/dataset.py
+    outs:
+      - data/raw/classification_features.csv
+      - data/raw/classification_target.csv
+      - data/raw/classification_dataset.csv
+    params:
+      - config.yaml:
+          - model.model_type
+          - model.random_state
+          - model.test_size
+
+  train:
+    cmd: python -m simple_pipeline.modeling.train
+    deps:
+      - simple_pipeline/modeling/train.py
+      - simple_pipeline/config.py
+      - data/raw/classification_dataset.csv
+    outs:
+      - models/trained_model.pkl
+    params:
+      - config.yaml:
+          - model.model_type
+          - model.random_state
+          - model.test_size
+          - random_forest.n_estimators
+          - random_forest.max_depth
+          - random_forest.min_samples_split
+          - random_forest.min_samples_leaf
+          - logistic_regression.max_iter
+          - logistic_regression.C
+          - decision_tree.max_depth
+          - decision_tree.min_samples_split
+          - decision_tree.min_samples_leaf
+          - decision_tree.criterion
+    metrics:
+      - metrics.json

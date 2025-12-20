@@ -10,4 +10,5 @@ numpy
 pydantic
 pyyaml
 joblib
+apache-airflow
 -e .

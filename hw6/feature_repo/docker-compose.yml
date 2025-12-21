@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  feast-dev:
+    image: feastdev/feast:0.34.0
+    container_name: feast-dev
+    volumes:
+      - .:/feast-project
+    working_dir: /feast-project
+    environment:
+      - FEAST_USAGE=false
+    stdin_open: true
+    tty: true
+    command: bash
+
+volumes: {}
